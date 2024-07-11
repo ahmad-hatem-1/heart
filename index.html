@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+
+    }
+
+    .container {
+        position: relative;
+        background-color: #000;
+        width: 100%;
+        min-height: 100vh;
+        overflow: hidden;
+    }
+
+    span {
+        width: 100px;
+        height: 100px;
+        background-image: url(heart.png);
+        position: absolute;
+        /* top: 50px; */
+        display: inline-block;
+        margin: 0 15px;
+        bottom: -100px;
+        left: 50%;
+        pointer-events: none;
+        background-size: cover;
+        transform:translateY(100%) scale(0);
+        animation: heart 6s 1 linear;
+    }
+
+    h1 {
+        color: #fff;
+        font-size: clamp(50px, 100px, 150px);
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-transform: uppercase;
+        font-weight: bolder;
+        opacity: 0;
+        transition: opacity 2s;
+        /* pointer-events: none; */
+        text-wrap: nowrap;
+    }
+    @media (max-width:768px){
+        h1{
+            width: 80%;
+            font-size: 40px;
+            display: flex;
+            flex-direction: column-reverse;
+            align-items: center;
+            justify-content: center;
+
+        }
+    }
+
+    @keyframes heart {
+        0% {
+            /* transform: translateY(0); */
+            filter: hue-rotate(0deg);
+            
+        }
+        
+        100% {
+            bottom: 100%;
+            transform:translateY(-100%) scale(1.5);
+            filter: hue-rotate(502deg);
+        }
+    }
+</style>
+
+<body>
+    <div class="container">
+        <h1>i love you <img src="person.png" alt="" srcset="" width="100px" ></h1>
+        <span></span>
+
+    </div>
+    <script>
+        let cont = document.querySelector(".container")
+        let h1 = document.querySelector("h1")
+        document.addEventListener("mousemove",e=>{
+            let x  = e.clientX
+            let y  = e.clientY
+            let span = document.createElement("span")
+            
+            let random_width_height  = Math.random() * 100
+            let random  = Math.random() * 50
+            span.style.left = (x + random) + "px"
+            span.style.top = y + "px"
+            span.style.width = random_width_height + "px"
+            span.style.height = random_width_height + "px"
+            h1.style.opacity = 0.5
+            cont.append(span)
+            setTimeout(_=>{
+                span.remove()
+                // h1.style.opacity = 0
+            },6000)
+        })
+        if (document.body.clientWidth >= 8) {
+            h1.style.opacity = 0.5
+            setTimeout(_ => {
+                document.body.click()
+            }, 3000)
+            document.addEventListener("click", e => {
+                new Promise((resolve, regect) => {
+                    for (i = 0; i < 5; i++) {
+                        let span = document.createElement("span")
+                        cont.append(span)
+                        let random_width_height = Math.random() * 100
+                        let random = Math.random()
+                        span.style.left = (random * document.body.clientWidth) + "px"
+                        // span.style.top = (random * document.body.clientHeight)+ "px"
+                        span.style.width = random_width_height + "px"
+                        span.style.height = random_width_height + "px"
+                        span.classList.add("active")
+                        setTimeout(_ => {
+                            span.classList.remove("active")
+                            span.remove()
+                        }, 6000)
+                        resolve()
+                    }
+                }).then(r => {
+                    h1.style.opacity = 0.5
+                    setInterval(_ => {
+                        for (i = 0; i < 20; i++) {
+                            let span = document.createElement("span")
+                            cont.append(span)
+                            let random_width_height = Math.random() * 100
+                            let random = Math.random()
+                            span.style.cssText = `
+                        transform:translateY("${- (i * 10)}px")
+                    `
+                            span.style.left = (random * document.body.clientWidth) + "px"
+                            span.style.bottom = (i * 10) + "px"
+                            span.style.width = (random_width_height  )+ "px"
+                            span.style.height = (random_width_height )+ "px"
+                            setTimeout(_ => {
+                                span.remove()
+                            }, 6000)
+                        }
+                    }, 3000)
+                })
+
+
+                // for (i=0 ; i< 50;i++){
+                //     let span = document.createElement("span")
+                //     cont.append(span)
+                //     let random_width_height  = Math.random() * 100
+                //     let random  = Math.random() 
+                //     span.style.left = (random * document.body.clientWidth ) + "px"
+                //     span.style.top = (random * document.body.clientHeight)+ "px"
+                //     span.style.width = random_width_height + "px"
+                //     span.style.height = random_width_height + "px"
+                // setTimeout(_=>{
+                //     span.remove()
+                //     h1.style.opacity = 0
+                // },3000)
+                // }
+                // let x  = e.clientX
+                // let y  = e.clientY
+            })
+        }
+    </script>
+</body>
+
+</html>
