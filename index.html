@@ -36,10 +36,11 @@
         background-size: cover;
         transform:translateY(100%) scale(0);
         animation: heart 6s 1 linear;
+        z-index: 1;
     }
 
     h1 {
-        color: #fff;
+        color: #aa2828;
         font-size: clamp(50px, 100px, 150px);
         position: absolute;
         top: 50%;
@@ -49,6 +50,7 @@
         font-weight: bolder;
         opacity: 0;
         transition: opacity 2s;
+        z-index: 99;
         /* pointer-events: none; */
         text-wrap: nowrap;
     }
@@ -73,19 +75,121 @@
         
         100% {
             bottom: 100%;
-            transform:translateY(-100%) scale(1.5);
+            transform:translateY(-100%) scale(1.2);
             filter: hue-rotate(502deg);
         }
     }
+
+    .heart {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  
+  opacity: 0;
+  animation-name: radiate;
+  animation-duration: 7s;
+  
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  animation-direction: normal;
+  animation-fill-mode: backwards;
+  path {
+  fill: #a01b1b;
+  }
+}
+
+
+.heart:nth-child(1) {
+  animation-delay: 2s;
+}
+.heart:nth-child(2) {
+  animation-delay: 3s;
+}
+.heart:nth-child(3) {
+  animation-delay: 4s;
+}
+.heart:nth-child(4) {
+  animation-delay: 5s;
+}
+.heart:nth-child(5) {
+  animation-delay: 6s;
+}
+
+@keyframes radiate {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  1% {
+    opacity: 0.15;
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(2);
+  }
+}
+
+
+/* Layer animations for extra fun
+//
+.heart path {
+  animation: 5s x infinite;
+  transform-origin: 50% 50%;
+}
+@keyframes x {
+  0% {
+    transform:scale(1)
+  }
+  10%{
+    transform: scale(0.95)
+  }
+
+  40% {
+    transform: scale(1)
+  }
+  60% {
+    transform: scale(0.95)
+  }
+
+  80% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+*/
+
+
 </style>
 
 <body>
     <div class="container">
         <h1>i love you <img src="person.png" alt="" srcset="" width="100px" ></h1>
         <span></span>
+        <div class="wrapper">
+
+            <svg class="heart" version="1.1"
+                 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/"
+                 x="0px" y="0px" width="101.7px" height="87.6px" viewBox="0 0 101.7 87.6" enable-background="new 0 0 101.7 87.6"
+                 xml:space="preserve">
+            <path d="M51,12.8c0-0.1-0.1-0.1-0.1-0.2c0,0.1-0.1,0.1-0.1,0.2C31-10.7,0,0.2,0,28.9c0,27.6,40.7,56.9,50.9,58.8
+                c10.1-1.8,50.9-31.1,50.9-58.8C101.7,0.2,70.7-10.7,51,12.8z"/>
+            </svg>
+            </div>
 
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script>
+        $(function() {
+  $love = $('.heart');
+  for( var i = 0; i < 4; i++) {
+    $('.wrapper').append($love.clone()); 
+  }
+});
         let cont = document.querySelector(".container")
         let h1 = document.querySelector("h1")
         document.addEventListener("mousemove",e=>{
@@ -130,9 +234,9 @@
                         resolve()
                     }
                 }).then(r => {
-                    h1.style.opacity = 0.5
+                    h1.style.opacity = 0.9
                     setInterval(_ => {
-                        for (i = 0; i < 20; i++) {
+                        for (i = 0; i < 5; i++) {
                             let span = document.createElement("span")
                             cont.append(span)
                             let random_width_height = Math.random() * 100
@@ -152,23 +256,9 @@
                 })
 
 
-                // for (i=0 ; i< 50;i++){
-                //     let span = document.createElement("span")
-                //     cont.append(span)
-                //     let random_width_height  = Math.random() * 100
-                //     let random  = Math.random() 
-                //     span.style.left = (random * document.body.clientWidth ) + "px"
-                //     span.style.top = (random * document.body.clientHeight)+ "px"
-                //     span.style.width = random_width_height + "px"
-                //     span.style.height = random_width_height + "px"
-                // setTimeout(_=>{
-                //     span.remove()
-                //     h1.style.opacity = 0
-                // },3000)
-                // }
-                // let x  = e.clientX
-                // let y  = e.clientY
+               
             })
+            
         }
     </script>
 </body>
